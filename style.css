@@ -1,0 +1,454 @@
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+:root {
+    --bg1: #12021a;
+    --bg2: #40103a;
+  }
+
+  html,body {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(180deg, var(--bg1), var(--bg2));
+    overflow: hidden; /* keep hearts visually inside viewport */
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+
+  }
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* top & bottom rows */;
+    position: relative;
+    perspective: 1000px; /* For 3D effect */
+    color: white;
+
+  }
+  .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 110%;
+    height: 110%;
+    background-image: url('photo_2025-11-06_19-25-01.jpg');
+    background-size: cover;
+    background-position: center;
+    transform: translateZ(-200px) scale(1.2);
+    transition: transform .18s linear;
+  z-index:-2; filter:brightness(.55) saturate(1.05);
+
+  }
+
+  /* optional visual gun at bottom */
+  .gun {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-8deg);
+    width: 160px;
+    height: 84px;
+    pointer-events: none; /* not clickable */
+    background: url('download (1).png') no-repeat center/contain;
+    opacity: 0.95;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5));
+    top: 75%;
+  }
+
+  /* container for hearts */
+  .love-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none; /* hearts shouldn't block interactions */
+  }
+
+  .heart {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform, opacity;
+    user-select: none;
+    font-size: 26px;
+    line-height: 1;
+    transform-origin: center;
+    opacity: 1;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+  }
+
+
+  /* Gentle floating after initial spread (applied via class) */
+  @keyframes gentle-drift {
+    0%   { transform: translate3d(0,0,0) rotate(0deg); }
+    50%  { transform: translate3d(6px,-8px,0) rotate(10deg); }
+    100% { transform: translate3d(-6px,6px,0) rotate(-8deg); }
+  }
+
+  .drift {
+    animation: gentle-drift 3.5s ease-in-out infinite;
+  }
+
+
+  .row {
+    display: flex;
+    justify-content: space-between; /* left & right sides */
+    padding: 16px;
+  }
+  .row img{
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+  }
+  .row.top {
+    margin: 24px;
+    
+}
+.row.bottom {
+    margin-bottom: 116px;
+    margin-inline: 24px;
+}
+  img {
+    width: 110px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+/*  .center-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(255,255,255,0.2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  @media (max-width: 720px) {
+  .corner-img { width: 72px; height: 72px; }
+  .gun { width: 110px; height: 60px; bottom: 14px; }
+  .center-box { padding: 16px; font-size: 1rem; }
+}*/
+
+
+/* circle container - initially hidden */
+.container {
+  position: absolute;
+  top: 8%;               /* slightly below top images */
+  left: 50%;              /* horizontally centered */
+  transform: translateX(-50%) scale(0.95); /* center horizontally */
+  width: 240px;           /* adjust to fit your design */
+  height: 240px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 40;
+  transition: opacity 400ms ease, transform 500ms ease;
+}
+
+/* visible state */
+.container.visible {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 400ms ease, transform 500ms ease;
+}
+
+/* make --i:0 produce visible size by adding +1 */
+.circle {
+  position: absolute;
+  background: transparent;
+  width: calc((var(--i) + 1) * 1.8vmin);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 3px solid rgb(0, 255, 13);
+  transform-style: preserve-3d;
+  transform: rotateX(70deg) translateZ(50px);
+  animation: animate 3s ease-in-out calc(var(--i) * 0.08s) infinite;
+  box-shadow: 0 0 15px rgb(124, 124, 124),
+              inset 0 0 15px rgb(124, 124, 124);
+}
+
+/* animation keyframes */
+@keyframes animate {
+  0%, 100% {
+    transform: rotateX(70deg) translateZ(50px) translateY(0);
+    filter: hue-rotate(0);
+  }
+
+  50% {
+    transform: rotateX(70deg) translateZ(50px) translateY(-50vmin);
+    filter: hue-rotate(360deg);
+  }
+}
+
+/* optional: paused helper */
+.container.paused .circle { animation-play-state: paused; }
+
+/* responsive */
+@media (max-width:720px){
+  .circle { border-width: 2px; }
+  .corner-img{ width:72px; height:72px; }
+}
+
+
+/* SECRET BUTTON bottom (below gun) */
+.secret-bottom-wrap {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 12px;           /* very bottom - adjust if you want more spacing */
+  z-index: 70;            /* ensure above gun */
+  pointer-events: auto;
+}
+
+.secret-btn {
+  background: linear-gradient(90deg,#ff7ab6,#ffde6b);
+  color: #111;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 10px 30px rgba(255,126,180,0.18);
+  cursor: pointer;
+  transform-origin: center;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.secret-btn:active{ transform: translateY(2px) scale(.99) }
+.secret-btn:focus{ outline: 3px solid rgba(255,200,200,0.25) }
+
+/* SECRET FULLSCREEN MODAL */
+.secret-modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(6,6,8,0.6); /* overlay */
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+
+/* inner card */
+.secret-modal.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.secret-modal-inner {
+  width: min(900px, 92vw);
+  max-width: 980px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,245,240,0.97));
+  color: #111;
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 30px 80px rgba(2,2,6,0.6);
+  position: relative;
+  transform-origin: center;
+  transform: translateY(20px) scale(.96);
+}
+
+/* when visible, we animate in via JS/GSAP (or fallback CSS) */
+.secret-modal.visible .secret-modal-inner {
+  transform: translateY(0) scale(1);
+  transition: transform 450ms cubic-bezier(.2,.9,.3,1);
+}
+
+.secret-close {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  color: rgba(0,0,0,0.6);
+  cursor: pointer;
+}
+
+/* content look */
+.secret-content { text-align:center; padding: 6px 12px; }
+.secret-content h1 {
+  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+  margin-bottom: 12px;
+  color: #ff4d7a;
+  text-shadow: 0 6px 20px rgba(255,77,122,0.12);
+}
+.big-message {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  line-height: 1.55;
+  color: #222;
+  margin: 12px 0 20px;
+  font-weight: 600;
+}
+.sub-note {
+  color: #666;
+  font-size: .95rem;
+  margin-top: 8px;
+}
+
+/* small screen */
+@media (max-width:600px) {
+  .secret-modal-inner { padding: 18px; border-radius: 14px; }
+  .big-message { font-size: 1rem; }
+  .secret-btn { padding: 10px 14px; font-size: .95rem; }
+}
+
+
+
+
+/* 🎥 Video Button at bottom */
+.video-bottom-wrap {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 74px; /* above secret button or gun */
+  z-index: 80;
+}
+
+.video-btn {
+  background: linear-gradient(90deg, #6bd6ff, #ff88e2);
+  color: #111;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.video-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+/* 🎬 Video Modal overlay */
+.video-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.video-modal.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-frame-wrap {
+  position: relative;
+  width: 90%;
+  max-width: 850px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+  transform: scale(0.9);
+  transition: transform 0.4s ease;
+}
+
+.video-modal.visible .video-frame-wrap {
+  transform: scale(1);
+}
+
+/* Close button */
+.video-close {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  color: #111;
+  z-index: 10;
+}
+.video-close:hover {
+  background: #fff;
+}
+
+
+
+
+/* 🌈 Center 3D Birthday Design */
+.center-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) perspective(800px) rotateX(10deg);
+  width: 80%;
+  max-width: 600px;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 
+    0 0 30px rgba(255,255,255,0.2),
+    inset 0 0 20px rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  animation: floatBox 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBox {
+  from { transform: translate(-50%, -50%) perspective(800px) rotateX(10deg) translateY(-6px); }
+  to { transform: translate(-50%, -50%) perspective(800px) rotateX(10deg) translateY(6px); }
+}
+
+.birthday-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.6rem;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 
+    0 0 10px #ff66b2,
+    0 0 20px #ff99cc,
+    0 0 40px #ff66b2;
+  animation: glowPulse 2.8s ease-in-out infinite alternate;
+  transform: translateZ(30px);
+}
+
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 8px #ff66b2, 0 0 16px #ff99cc, 0 0 24px #ff66b2; }
+  100% { text-shadow: 0 0 16px #ff99cc, 0 0 32px #ff66b2, 0 0 48px #ff3385; }
+}
+
+.birthday-text .gradient {
+  background: linear-gradient(90deg, #ff5cc3, #ffe97f, #5cf1ff);
+  background-clip: text;              /* ✅ Standard property */
+  -webkit-background-clip: text;      /* ✅ Chrome, Safari */
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.subtext {
+  margin-top: 14px;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 0 8px rgba(255,255,255,0.25);
+  animation: subFade 4s ease-in-out infinite alternate;
+}
+
+@keyframes subFade {
+  0% { opacity: 0.8; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(-3px); }
+}

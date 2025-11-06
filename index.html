@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Birthday Girl</title>
+    
+    <link rel="stylesheet" href="style.css" />
+    <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    
+  </head>
+  <body>
+
+     <!-- 🌌 Animated Background -->
+  <div class="background" id="background"></div>
+
+    <div class="row top">
+    <img id="img-tl" class="corner-img" src="photo_2025-11-06_19-25-51.jpg" alt="Top Left">
+    <img id="img-tr" class="corner-img" src="photo_2025-11-06_19-25-37.jpg" alt="Top Right">
+  </div>
+
+  <!-- Circle animation container (hidden initially) -->
+  <div class="container circles-hidden" id="circleContainer" aria-hidden="true">
+    <!-- 21 circles -->
+    <div class="circle" style="--i:0;"></div>
+    <div class="circle" style="--i:1;"></div>
+    <div class="circle" style="--i:2;"></div>
+    <div class="circle" style="--i:3;"></div>
+    <div class="circle" style="--i:4;"></div>
+    <div class="circle" style="--i:5;"></div>
+    <div class="circle" style="--i:6;"></div>
+    <div class="circle" style="--i:7;"></div>
+    <div class="circle" style="--i:8;"></div>
+    <div class="circle" style="--i:9;"></div>
+    <div class="circle" style="--i:10;"></div>
+    <div class="circle" style="--i:11;"></div>
+    <div class="circle" style="--i:12;"></div>
+    <div class="circle" style="--i:13;"></div>
+    <div class="circle" style="--i:14;"></div>
+    <div class="circle" style="--i:15;"></div>
+    <div class="circle" style="--i:16;"></div>
+    <div class="circle" style="--i:17;"></div>
+    <div class="circle" style="--i:18;"></div>
+    <div class="circle" style="--i:19;"></div>
+    <div class="circle" style="--i:20;"></div>
+  </div>
+
+  <!-- 🌟 3D Happy Birthday Center Box -->
+<div class="center-box">
+  <h1 class="birthday-text">
+    <span>🎂</span> 
+    Happy <span class="gradient">Birthday</span> 
+    <span>💖</span>
+  </h1>
+  <p class="subtext">Wishing you endless smiles, love & light 💫</p>
+</div>
+
+  <div class="row bottom">
+    <img id="img-bl" class="corner-img" src="photo_2025-11-06_19-24-47.jpg" alt="Bottom Left">
+    <img id="img-br" class="corner-img" src="photo_2025-11-06_19-25-26.jpg" alt="Bottom Right">
+  </div>
+
+
+      
+  </div>
+
+    <div class="love-layer" id="loveLayer"></div>
+    <div class="gun" id="gun"></div>
+
+
+    <!-- SECRET BUTTON & MESSAGE - place this just after the gun div (so it's below the gun) -->
+<div class="secret-bottom-wrap">
+  <button id="secretBtn" class="secret-btn" aria-haspopup="dialog" aria-expanded="false">
+    Open Secret Message 🎁
+  </button>
+</div>
+
+<!-- full-screen secret modal (hidden by default) -->
+<div id="secretModal" class="secret-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="secret-modal-inner" id="secretInner">
+    <button id="secretClose" class="secret-close" aria-label="Close message">&times;</button>
+
+    <div class="secret-content">
+      <!-- big happy message -->
+      <h1>Happy Birthday! 🎉</h1>
+
+      <p class="big-message">
+  জীবনটা অনেক ব্যস্ত, অনেক রঙের… কিন্তু তার ভেতরেও  
+  একটা রঙ আছে, যেটা শুধুই তোমার জন্য। 🎨  
+  তুমি আমার দিনের প্রথম আলো, রাতের শেষ ভাবনা।  
+  তোমাকে ভাবলেই মনে হয়, এই পৃথিবীটা এখনো সুন্দর…  
+  তুমি হাসলে মনে হয় সব দুঃখ মুছে যায়,  
+  তুমি চুপ থাকলে পৃথিবীটা যেন থেমে যায়। 💫  
+  আমার শুধু এই প্রার্থনা —  
+  তোমার জীবনে যেন সবসময় শান্তি, ভালোবাসা আর হাসি ভরে থাকে।  
+  তুমি যেমন, ঠিক তেমনই থেকো…  
+  কারণ সেই ‘তুমি’-টাই আমার পৃথিবীর সবচেয়ে সুন্দর অনুভূতি। ❤️  
+  <br><br>
+  🌷 <strong>শুভ জন্মদিন 💐</strong>
+</p>
+
+      <p class="sub-note">Click anywhere on this card or press × to close.</p>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- 🎬 VIDEO BUTTON & POPUP -->
+<div class="video-bottom-wrap">
+  <button id="videoBtn" class="video-btn">
+    🎬 Watch a Special Video
+  </button>
+</div>
+
+<!-- Video Modal -->
+<div id="videoModal" class="video-modal" aria-hidden="true">
+  <div class="video-frame" role="document">
+    <button id="closeVideo" class="video-close" aria-label="Close video">&times;</button>
+
+    <!-- 🎥 Local video file -->
+    <video id="videoFrame" width="800" height="450" controls>
+      <source src="video_2025-11-06_19-00-25.mp4" type="video/mp4">
+    </video>
+
+  </div>
+</div>
+
+
+
+
+    <script src="index.js"></script>
+
+  </body>
+</html>
